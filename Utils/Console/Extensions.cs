@@ -1,7 +1,9 @@
 ﻿using Spectre.Console;
 using Spectre.Console.Rendering;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Utils.String;
 
 namespace Utils.Console
@@ -102,6 +104,23 @@ namespace Utils.Console
         public static string YesNo(bool value)
         {
             return value ? "[green]Yes[/]" : "[red]No[/]";
+        }
+
+        public static IPrompt<string> GenerateChoiceMenu(IEnumerable<string> choicesText)
+        {
+            var choicesList = choicesText.ToList();
+            if (!choicesList.Any())
+                 throw new InvalidOperationException("Input empty!");
+
+            var prompt = new SelectionPrompt<string>()
+                .Title("[green]What would you like to do[/]?")
+                .PageSize(choicesList.Count)
+                .MoreChoicesText("[grey](Move up and down to reveal more choices)[/]");
+
+            foreach (var choice in choicesList)
+                prompt.AddChoice(choice);
+
+            return prompt;
         }
     }
 }

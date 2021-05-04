@@ -14,6 +14,9 @@ namespace Utils.TestConsole
             Console.Extensions.Log($"digitonlyFalse? {Console.Extensions.YesNo(digitStrfalse.IsDigitOnly())}", "info", false);
 
             AnsiConsole.Render(Console.Extensions.DirectorySummary("C:\\Games\\RimWorld"));
+
+            var choices = new[] {"qwerty", "fooobaar", "123467", "@^@#^&"};
+            AnsiConsole.Prompt(Console.Extensions.GenerateChoiceMenu(choices));
         }
     }
 }
