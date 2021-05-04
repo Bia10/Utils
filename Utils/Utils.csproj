@@ -2,6 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <PackageId>Bia10.Utils</PackageId>
+    <Authors>Bia10</Authors>
+    <PackageLicenseFile>license.txt</PackageLicenseFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -10,6 +13,13 @@
 
   <ItemGroup>
     <PackageReference Include="Spectre.Console" Version="0.39.1-preview.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\..\Documents\license.txt">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

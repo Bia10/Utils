@@ -35,7 +35,7 @@ namespace Utils.String
             if (!source.Valid())
                 throw new InvalidOperationException("Input string in wrong format!");
 
-            return source?.IndexOf(toCheck, comp) >= 0;
+            return source.IndexOf(toCheck, comp) >= 0;
         }
     }
 }
