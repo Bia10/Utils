@@ -4,6 +4,9 @@
     <TargetFramework>net5.0</TargetFramework>
     <PackageId>Bia10.Utils</PackageId>
     <Authors>Bia10</Authors>
+	<Company>Bia10</Company>
+    <PackageDescription>usefull stubs and snippets</PackageDescription>
+    <RepositoryUrl>https://github.com/Bia10/Utils</RepositoryUrl>
     <PackageLicenseFile>license.txt</PackageLicenseFile>
   </PropertyGroup>
 
