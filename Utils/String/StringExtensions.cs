@@ -13,7 +13,7 @@ namespace Utils.String
 
         public static bool IsDigitOnly(this string str)
         {
-            if (!Valid(str))
+            if (!str.Valid())
                 throw new InvalidOperationException("Input string in wrong format!");
 
             return str.All(char.IsDigit);
@@ -21,7 +21,7 @@ namespace Utils.String
 
         public static string StringBetweenStrings(this string input, string start, string end)
         {
-            if (!Valid(input))
+            if (!input.Valid())
                 throw new InvalidOperationException("Input string in wrong format!");
 
             var indexOfStart = input.IndexOf(start, StringComparison.Ordinal) + start.Length;
@@ -32,7 +32,7 @@ namespace Utils.String
 
         public static bool Contains(this string source, string toCheck, StringComparison comp)
         {
-            if (!Valid(source))
+            if (!source.Valid())
                 throw new InvalidOperationException("Input string in wrong format!");
 
             return source?.IndexOf(toCheck, comp) >= 0;
