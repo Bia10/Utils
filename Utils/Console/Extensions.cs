@@ -10,7 +10,7 @@ namespace Utils.Console
 {
     public class Extensions
     {
-        public static void Log(string message, string severity, bool escapeMessage)
+        public static void Log(string message, string severity, bool escapeMessage = false)
         {
             if (string.IsNullOrEmpty(message)) return;
             if (message.EndsWith("..."))
