@@ -26,7 +26,7 @@ namespace Utils.FileSystem
             fileSystemInfo.Delete();
         }
 
-        public static bool RenameFolder(this FileSystemInfo fileSystemInfo, string newName)
+        public static bool Rename(this FileSystemInfo fileSystemInfo, string newName)
         {
             switch (fileSystemInfo)
             {
@@ -37,14 +37,13 @@ namespace Utils.FileSystem
                         if (string.Equals(directoryInfo.Name, newName, StringComparison.OrdinalIgnoreCase))
                             return false; //new folder name is the same with the old one.
 
-                        var newDirectory = Path.Combine(directoryInfo.Parent == null 
+                        var newDirPath = Path.Combine(directoryInfo.Parent == null 
                             ? fileSystemInfo.FullName 
                             : directoryInfo.Parent.FullName, newName);
-
-                        if (new DirectoryInfo(newDirectory).Exists()) 
+                        if (new DirectoryInfo(newDirPath).Exists()) 
                             return false; //target directory already exists
 
-                        directoryInfo.MoveTo(newDirectory);
+                        directoryInfo.MoveTo(newDirPath);
                         return true;
                     }
                     catch
@@ -57,7 +56,11 @@ namespace Utils.FileSystem
                         if (!fileInfo.Exists) return false;
                         if (fileInfo.Directory == null || !fileInfo.Directory.Exists) return false;
 
-                        fileInfo.MoveTo(Path.Combine(fileInfo.Directory.FullName, newName));
+                        var newFilePath = Path.Combine(fileInfo.Directory.FullName, newName);
+                        if (new FileInfo(newFilePath).Exists())
+                            return false; //target file already exists
+
+                        fileInfo.MoveTo(newFilePath);
                         return true;
                     }
                     catch 
