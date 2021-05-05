@@ -19,23 +19,31 @@ namespace Utils.String
             return str.All(char.IsDigit);
         }
 
-        public static string StringBetweenStrings(this string input, string start, string end)
+        public static string GetDigitsOnly(this string str)
         {
-            if (!input.Valid())
+            if (!str.Valid())
                 throw new InvalidOperationException("Input string in wrong format!");
 
-            var indexOfStart = input.IndexOf(start, StringComparison.Ordinal) + start.Length;
-            var indexOfEnd = input.IndexOf(end, indexOfStart, StringComparison.Ordinal);
-
-            return string.IsNullOrEmpty(end) ? input[indexOfStart..] : input[indexOfStart..indexOfEnd];
+            return new string(str.Where(char.IsDigit).ToArray());
         }
 
-        public static bool Contains(this string source, string toCheck, StringComparison comp)
+        public static string StringBetweenStrings(this string str, string start, string end)
         {
-            if (!source.Valid())
+            if (!str.Valid())
                 throw new InvalidOperationException("Input string in wrong format!");
 
-            return source.IndexOf(toCheck, comp) >= 0;
+            var indexOfStart = str.IndexOf(start, StringComparison.Ordinal) + start.Length;
+            var indexOfEnd = str.IndexOf(end, indexOfStart, StringComparison.Ordinal);
+
+            return string.IsNullOrEmpty(end) ? str[indexOfStart..] : str[indexOfStart..indexOfEnd];
+        }
+
+        public static bool Contains(this string str, string toCheck, StringComparison comp)
+        {
+            if (!str.Valid())
+                throw new InvalidOperationException("Input string in wrong format!");
+
+            return str.IndexOf(toCheck, comp) >= 0;
         }
     }
 }
