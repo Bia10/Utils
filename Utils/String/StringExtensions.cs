@@ -27,6 +27,28 @@ namespace Utils.String
             return new string(str.Where(char.IsDigit).ToArray());
         }
 
+        public static T To<T>(this string str)  //TODO: validation
+        {
+            if (!str.Valid())
+                throw new InvalidOperationException("Input string in wrong format!");
+
+            return typeof(T) switch
+            {
+                { } intType when intType == typeof(int) =>
+                    (T) Convert.ChangeType(int.Parse(str), typeof(T)),
+                { } floatType when floatType == typeof(float) => 
+                    (T) Convert.ChangeType(float.Parse(str), typeof(T)),
+                { } doubleType when doubleType == typeof(double) =>
+                    (T) Convert.ChangeType(double.Parse(str), typeof(T)),
+                { } decimalType when decimalType == typeof(decimal) =>
+                    (T) Convert.ChangeType(decimal.Parse(str), typeof(T)),
+                { } longType when longType == typeof(long) => 
+                    (T) Convert.ChangeType(long.Parse(str), typeof(T)),
+
+                _ => throw new InvalidOperationException("Input type is not supported!")
+            };
+        }
+
         public static string StringBetweenStrings(this string str, string start, string end)
         {
             if (!str.Valid())
