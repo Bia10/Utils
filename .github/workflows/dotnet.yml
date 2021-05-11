@@ -23,7 +23,7 @@ jobs:
    #  run: dotnet test --no-build --verbosity normal
     - name: Nuget Pack
       run: dotnet pack -c release
-      working-directory: ./Utils/Utils
+      working-directory: ./src/Utils
     - name: Nuget push
       run: dotnet nuget push *.nupkg --skip-duplicate -k ${{ secrets.GITHUB_TOKEN }} -s https://nuget.pkg.github.com/Bia10/index.json
-      working-directory: ./Utils/bin/Release
+      working-directory: ./src/Utils/bin/release/
