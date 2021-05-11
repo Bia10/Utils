@@ -62,7 +62,7 @@ namespace Utils.Process
 
         private static void ErrorHandler(object sendingProcess, DataReceivedEventArgs outLine)
         {
-            Extensions.Log(outLine.Data, "error", true));
+            Extensions.Log(outLine.Data, "error", true);
         }
     }
 }
