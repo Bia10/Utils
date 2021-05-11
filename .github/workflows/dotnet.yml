@@ -24,6 +24,11 @@ jobs:
     - name: Nuget Pack
       run: dotnet pack -c release
       working-directory: ./src/Utils
-    - name: Nuget push
+    - name: Nuget Push to GitHub
       run: dotnet nuget push *.nupkg --skip-duplicate -k ${{ secrets.GITHUB_TOKEN }} -s https://nuget.pkg.github.com/Bia10/index.json
       working-directory: ./src/Utils/bin/release/
+    - name: Publish to Nuget
+      uses: brandedoutcast/publish-nuget@v2.5.5
+      with:
+          PROJECT_FILE_PATH: src/Utils/Utils.csproj
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
