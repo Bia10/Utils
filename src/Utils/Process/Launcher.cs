@@ -57,12 +57,12 @@ namespace Utils.Process
 
         private static void OutputHandler(object sendingProcess, DataReceivedEventArgs outLine)
         {
-            Extensions.Log(outLine.Data, "info");
+            Extensions.Log(outLine.Data, "info", true);
         }
 
         private static void ErrorHandler(object sendingProcess, DataReceivedEventArgs outLine)
         {
-            Extensions.Log(outLine.Data, "error");
+            Extensions.Log(outLine.Data, "error", true));
         }
     }
 }
