@@ -5,10 +5,9 @@ namespace Utils.String
 {
     public static class StringExtensions
     {
-
         public static bool Valid(this string str)
         {
-            return (!string.IsNullOrEmpty(str) && !string.IsNullOrWhiteSpace(str));
+            return !string.IsNullOrEmpty(str) && !string.IsNullOrWhiteSpace(str);
         }
 
         public static bool IsDigitOnly(this string str)
@@ -35,14 +34,6 @@ namespace Utils.String
             var specialChars = new string[] {"-", ".", "e", "E"};
 
             return str.ContainsAny(specialChars);
-        }
-
-        public static bool Contains(this string str, string toCheck, StringComparison comparison)
-        {
-            if (!str.Valid())
-                throw new InvalidOperationException("Input string in wrong format!");
-
-            return str.IndexOf(toCheck, comparison) >= 0;
         }
 
         public static bool ContainsAny(this string str, params string[] strings)
@@ -95,7 +86,7 @@ namespace Utils.String
                         if (!str.IsDigitOnly() && !str.Contains("-"))
                             throw new InvalidOperationException("Input string in wrong format, non-digit char other then '-' present.");
                         if (str.ToCharArray().Length > 19)
-                            throw new InvalidOperationException("Input string in wrong format, too many digits maximum for int32 is 10.");
+                            throw new InvalidOperationException("Input string in wrong format, too many digits maximum for int64 is 19.");
 
                         long value;
                         try {
@@ -112,7 +103,7 @@ namespace Utils.String
                         if (!str.IsDigitOnly() && !str.ContainsSpecialDigitChar())
                             throw new InvalidOperationException("Input string in wrong format, non-digit char other then '-' present.");
                         if (str.ToCharArray().Length > 9)
-                            throw new InvalidOperationException("Input string in wrong format, too many digits maximum for int32 is 10.");
+                            throw new InvalidOperationException("Input string in wrong format, too many digits maximum for float is 9.");
                       
                         float value;
                         try {
@@ -129,15 +120,13 @@ namespace Utils.String
                         if (!str.IsDigitOnly() && !str.ContainsSpecialDigitChar())
                             throw new InvalidOperationException("Input string in wrong format, non-digit char other then '-' present.");
                         if (str.ToCharArray().Length > 17)
-                            throw new InvalidOperationException("Input string in wrong format, too many digits maximum for int32 is 10.");
+                            throw new InvalidOperationException("Input string in wrong format, too many digits maximum for double is 17.");
 
                         double value;
-                        try
-                        {
+                        try {
                             value = double.Parse(str);
                         }
-                        catch
-                        {
+                        catch {
                             throw;
                         }
 
@@ -148,15 +137,13 @@ namespace Utils.String
                         if (!str.IsDigitOnly() && !str.ContainsSpecialDigitChar())
                             throw new InvalidOperationException("Input string in wrong format, non-digit char other then '-' present.");
                         if (str.ToCharArray().Length > 29)
-                            throw new InvalidOperationException("Input string in wrong format, too many digits maximum for int32 is 10.");
+                            throw new InvalidOperationException("Input string in wrong format, too many digits maximum for decimal is 29.");
 
                         decimal value;
-                        try
-                        {
+                        try {
                             value = decimal.Parse(str);
                         }
-                        catch
-                        {
+                        catch {
                             throw;
                         }
 
