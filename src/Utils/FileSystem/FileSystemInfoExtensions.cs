@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using Utils.String;
 
 namespace Utils.FileSystem
 {
@@ -12,6 +13,12 @@ namespace Utils.FileSystem
                 DirectoryInfo { Exists: true } or FileInfo { Exists: true } => true,
                 _ => false,
             };
+        }
+
+        public static void ExistsDelete(this FileSystemInfo fileSystemInfo)
+        {
+            if (!fileSystemInfo.Exists) return;
+            if (fileSystemInfo.Exists) fileSystemInfo.Delete();
         }
 
         public static void DeleteReadOnly(this FileSystemInfo fileSystemInfo)
@@ -28,6 +35,8 @@ namespace Utils.FileSystem
 
         public static bool Rename(this FileSystemInfo fileSystemInfo, string newName)
         {
+            if (!fileSystemInfo.Exists || !newName.Valid()) return false;
+
             switch (fileSystemInfo)
             {
                 case DirectoryInfo directoryInfo:

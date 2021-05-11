@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31205.134
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utils", "Utils\Utils.csproj", "{D135C706-13B8-4F36-BF23-322E4A2C03D8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utils", "src\Utils\Utils.csproj", "{D135C706-13B8-4F36-BF23-322E4A2C03D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utils.TestConsole", "Utils.TestConsole\Utils.TestConsole.csproj", "{7CAA0402-A486-4401-85BB-42F4B3F7F888}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utils.TestConsole", "src\Utils.TestConsole\Utils.TestConsole.csproj", "{7CAA0402-A486-4401-85BB-42F4B3F7F888}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
