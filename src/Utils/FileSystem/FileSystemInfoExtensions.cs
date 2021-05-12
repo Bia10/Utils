@@ -17,8 +17,14 @@ namespace Utils.FileSystem
 
         public static void ExistsDelete(this FileSystemInfo fileSystemInfo)
         {
-            if (!fileSystemInfo.Exists) return;
-            if (fileSystemInfo.Exists) fileSystemInfo.Delete();
+            switch (fileSystemInfo.Exists)
+            {
+                case false:
+                    return;
+                case true:
+                    fileSystemInfo.Delete();
+                    break;
+            }
         }
 
         public static void DeleteReadOnly(this FileSystemInfo fileSystemInfo)

@@ -31,7 +31,7 @@ namespace Utils.String
             if (!str.Valid())
                 throw new InvalidOperationException("Input string in wrong format!");
 
-            var specialChars = new string[] {"-", ".", "e", "E"};
+            var specialChars = new[] {"-", ".", "e", "E"};
 
             return str.ContainsAny(specialChars);
         }
@@ -64,7 +64,7 @@ namespace Utils.String
 
             switch (typeof(T))
             {
-                case Type intType when intType == typeof(int):
+                case { } intType when intType == typeof(int):
                     {
                         if (!str.IsDigitOnly() && !str.Contains("-"))
                             throw new InvalidOperationException("Input string in wrong format, non-digit char other then '-' present.");
@@ -81,7 +81,7 @@ namespace Utils.String
                             
                         return (T) Convert.ChangeType(value, typeof(T));
                     }
-                case Type longType when longType == typeof(long):
+                case { } longType when longType == typeof(long):
                     {
                         if (!str.IsDigitOnly() && !str.Contains("-"))
                             throw new InvalidOperationException("Input string in wrong format, non-digit char other then '-' present.");
@@ -98,7 +98,7 @@ namespace Utils.String
 
                         return (T) Convert.ChangeType(value, typeof(T));
                     }
-                case Type floatType when floatType == typeof(float):
+                case { } floatType when floatType == typeof(float):
                     {
                         if (!str.IsDigitOnly() && !str.ContainsSpecialDigitChar())
                             throw new InvalidOperationException("Input string in wrong format, non-digit char other then '-' present.");
@@ -115,7 +115,7 @@ namespace Utils.String
 
                         return (T) Convert.ChangeType(value, typeof(T));
                     }
-                case Type doubleType when doubleType == typeof(double):
+                case { } doubleType when doubleType == typeof(double):
                     {
                         if (!str.IsDigitOnly() && !str.ContainsSpecialDigitChar())
                             throw new InvalidOperationException("Input string in wrong format, non-digit char other then '-' present.");
@@ -132,7 +132,7 @@ namespace Utils.String
 
                         return (T) Convert.ChangeType(value, typeof(T));
                     }
-                case Type decimalType when decimalType == typeof(decimal):
+                case { } decimalType when decimalType == typeof(decimal):
                     {
                         if (!str.IsDigitOnly() && !str.ContainsSpecialDigitChar())
                             throw new InvalidOperationException("Input string in wrong format, non-digit char other then '-' present.");

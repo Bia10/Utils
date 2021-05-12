@@ -1,7 +1,7 @@
 ﻿using System;
 using Utils.Reflection;
 
-namespace Utils.Types.Enumeration
+namespace Utils.Types
 {
     public static class EnumExtensions
     {
