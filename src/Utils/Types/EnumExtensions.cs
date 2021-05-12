@@ -1,6 +1,5 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Reflection;
+using Utils.Reflection;
 
 namespace Utils.Types.Enumeration
 {
@@ -11,18 +10,14 @@ namespace Utils.Types.Enumeration
             return (int)(IConvertible)@enum;
         }
 
-        public static int CountMembers(this Enum _)
+        public static int CountMembers<T>(this T _) where T: Enum
         {
-            return Enum.GetNames(typeof(Enum)).Length;
+            return Enum.GetNames(typeof(T)).Length;
         }
 
         public static string GetDescription(this Enum value)
         {
-            FieldInfo fieldInfo = value.GetType().GetField(value.ToString());
-            if (fieldInfo == null) return null;
-            var attribute = (DescriptionAttribute)fieldInfo.GetCustomAttribute(typeof(DescriptionAttribute));
-
-            return attribute.Description;
+            return value.GetDescriptionAttribute();
         }
     }
 }

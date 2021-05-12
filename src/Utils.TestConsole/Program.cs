@@ -50,6 +50,8 @@ namespace Utils.TestConsole
             Console.ConsoleExtensions.Log($"langInt: {langInt}", "info");
             int enumCount = lang.CountMembers();
             Console.ConsoleExtensions.Log($"enumCount: {enumCount}", "info");
+            var enumDesc = lang.GetDescription();
+            Console.ConsoleExtensions.Log($"enumDesc: {enumDesc}", "info");
         }
     }
 }
