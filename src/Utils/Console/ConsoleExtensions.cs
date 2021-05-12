@@ -8,7 +8,7 @@ using Utils.String;
 
 namespace Utils.Console
 {
-    public class Extensions
+    public class ConsoleExtensions
     {
         public static void Log(string message, string severity, bool escapeMessage = false)
         {
