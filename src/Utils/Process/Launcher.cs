@@ -3,6 +3,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using Utils.Console;
+using Utils.String;
 
 namespace Utils.Process
 {
@@ -20,10 +21,11 @@ namespace Utils.Process
 
         public void Launch()
         {
-            var exeFile = new FileInfo(_exePath);
-            var workDir = exeFile.DirectoryName;
-            if (workDir == null)
-                throw new InvalidOperationException("Work directory null, cannot launch!");
+            if (!_exePath.Valid())
+                throw new InvalidOperationException("Path to exe null or empty!");
+            var workDirPath = new FileInfo(_exePath).DirectoryName;
+            if (workDirPath == null)
+                throw new InvalidOperationException("Failed to obtain path to working directory!");
 
             try
             {
@@ -33,7 +35,7 @@ namespace Utils.Process
                     {
                         FileName = _exePath,
                         Arguments = _cmdArgs,
-                        WorkingDirectory = workDir,
+                        WorkingDirectory = workDirPath,
                         UseShellExecute = false,
                         RedirectStandardOutput = true,
                         RedirectStandardError = true
