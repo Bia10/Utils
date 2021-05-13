@@ -67,7 +67,7 @@ namespace Utils.Marshalling
             return ByteArrayToStructure<T>(byteArray);
         }
 
-        private static T ByteArrayToStructure<T>(BinaryReader reader) 
+        public static T ByteArrayToStructure<T>(BinaryReader reader) 
             where T : struct
         {
             var size = Marshal.SizeOf(typeof(T));
