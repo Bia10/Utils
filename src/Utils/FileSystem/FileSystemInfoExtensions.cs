@@ -93,7 +93,7 @@ namespace Utils.FileSystem
             return false;
         }
 
-        private static void CopyTo(this FileSystemInfo fileSystemInfo, string targetPath, bool removeSrc = true)
+        public static void CopyTo(this FileSystemInfo fileSystemInfo, string targetPath, bool removeSrc = true)
         {
             if (!fileSystemInfo.Exists || !targetPath.Valid()) return;
 
