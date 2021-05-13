@@ -6,23 +6,28 @@ namespace Utils.FileSystem
 {
     public static class FileSystemInfoExtensions
     {
-        public static bool Exists(this FileSystemInfo fileSystemInfo)
-        {
-            return fileSystemInfo switch
-            {
-                DirectoryInfo { Exists: true } or FileInfo { Exists: true } => true,
-                _ => false,
-            };
-        }
-
         public static void ExistsDelete(this FileSystemInfo fileSystemInfo)
         {
             switch (fileSystemInfo.Exists)
             {
-                case false:
-                    return;
+                case false: return;
                 case true:
                     fileSystemInfo.Delete();
+                    break;
+            }
+        }
+
+        public static void NotExistsCreate(this FileSystemInfo fileSystemInfo)
+        {
+            switch (fileSystemInfo)
+            {
+                case FileInfo:
+                    if (!fileSystemInfo.Exists)
+                        File.Create(fileSystemInfo.FullName);
+                    break;
+                case DirectoryInfo:
+                    if (!fileSystemInfo.Exists)
+                        Directory.CreateDirectory(fileSystemInfo.FullName);
                     break;
             }
         }
@@ -55,7 +60,8 @@ namespace Utils.FileSystem
                         var newDirPath = Path.Combine(directoryInfo.Parent == null 
                             ? fileSystemInfo.FullName 
                             : directoryInfo.Parent.FullName, newName);
-                        if (new DirectoryInfo(newDirPath).Exists()) 
+
+                        if (Directory.Exists(newDirPath)) 
                             return false; //target directory already exists
 
                         directoryInfo.MoveTo(newDirPath);
@@ -72,7 +78,7 @@ namespace Utils.FileSystem
                         if (fileInfo.Directory == null || !fileInfo.Directory.Exists) return false;
 
                         var newFilePath = Path.Combine(fileInfo.Directory.FullName, newName);
-                        if (new FileInfo(newFilePath).Exists())
+                        if (File.Exists(newFilePath))
                             return false; //target file already exists
 
                         fileInfo.MoveTo(newFilePath);
@@ -85,6 +91,31 @@ namespace Utils.FileSystem
             }
 
             return false;
+        }
+
+        private static void CopyTo(this FileSystemInfo fileSystemInfo, string targetPath, bool removeSrc = true)
+        {
+            if (!fileSystemInfo.Exists || !targetPath.Valid()) return;
+
+            switch (fileSystemInfo)
+            {
+                case FileInfo:
+                    File.Copy(fileSystemInfo.FullName, Path.Combine(targetPath, Path.GetFileName(fileSystemInfo.FullName)));
+                    break;
+                case DirectoryInfo:
+                {
+                    new DirectoryInfo(targetPath).NotExistsCreate();
+
+                    foreach (var file in Directory.GetFiles(fileSystemInfo.FullName))
+                        File.Copy(file, Path.Combine(targetPath, Path.GetFileName(file)));
+                    foreach (var directory in Directory.GetDirectories(fileSystemInfo.FullName))
+                        CopyTo(new DirectoryInfo(directory), Path.Combine(targetPath, Path.GetFileName(directory)));
+                    break;
+                }
+            }
+
+            if (!removeSrc) return;
+            fileSystemInfo.ExistsDelete();
         }
     }
 }
