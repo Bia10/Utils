@@ -3,7 +3,7 @@ using Utils.Console;
 using Utils.Device.Display.Enums;
 using Utils.Device.Display.Structures;
 using Utils.Types;
-using Utils.Win32;
+using Utils.Win32API;
 
 namespace Utils.Device.Display
 {
