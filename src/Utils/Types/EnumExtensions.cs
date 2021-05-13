@@ -10,7 +10,8 @@ namespace Utils.Types
             return (int)(IConvertible)@enum;
         }
 
-        public static int CountMembers<T>(this T _) where T: Enum
+        public static int CountMembers<T>(this T _) 
+            where T: Enum
         {
             return Enum.GetNames(typeof(T)).Length;
         }
