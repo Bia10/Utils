@@ -1,7 +1,9 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Runtime.InteropServices;
 using Utils.Console;
 using Utils.Device.Display.Enums;
 using Utils.Device.Display.Structures;
+using Utils.String;
 using Utils.Types;
 using Utils.Win32API;
 
@@ -30,13 +32,11 @@ namespace Utils.Device.Display
 
         public void PrintCurrentDisplaySettings()
         {
-            if (string.IsNullOrEmpty(DevMode.dmDeviceName))
-                return;
+            if (!DevMode.dmDeviceName.Valid())
+                throw new InvalidOperationException("Display device name is not valid! " +
+                                                    $"DeviceName: {DevMode.dmDeviceName}");
 
-            var structType = typeof(DeviceMode);
-            var fields = structType.GetFields();
-
-            foreach (var field in fields)
+            foreach (var field in typeof(DeviceMode).GetFields())
                 ConsoleExtensions.Log($"{field.Name} {field.GetValue(DevMode)}", "info");
         }
     }

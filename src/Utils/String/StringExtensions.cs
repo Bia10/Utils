@@ -57,14 +57,52 @@ namespace Utils.String
             return string.IsNullOrEmpty(end) ? str[indexOfStart..] : str[indexOfStart..indexOfEnd];
         }
 
-        public static T To<T>(this string str)  //TODO: more types, more checks
+        public static T To<T>(this string str)  //TODO: unsigned types, more checks
         {
             if (!str.Valid())
                 throw new InvalidOperationException("Input string in wrong format!");
 
             switch (typeof(T))
             {
-                case { } intType when intType == typeof(int):
+                case { } sbyteType when sbyteType == typeof(sbyte): // int8
+                    {
+                    if (!str.IsDigitOnly() && !str.Contains("-"))
+                        throw new InvalidOperationException("Input string in wrong format, non-digit char other then '-' present.");
+                    if (str.ToCharArray().Length > 3)
+                        throw new InvalidOperationException("Input string in wrong format, too many digits maximum for int8 is 3.");
+
+                    sbyte value;
+                    try
+                    {
+                        value = sbyte.Parse(str);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new InvalidOperationException("Failed to parse input to numeric type!", ex);
+                    }
+
+                    return (T)Convert.ChangeType(value, typeof(T));
+                }
+                case { } shortType when shortType == typeof(short): // int16
+                    {
+                        if (!str.IsDigitOnly() && !str.Contains("-"))
+                            throw new InvalidOperationException("Input string in wrong format, non-digit char other then '-' present.");
+                        if (str.ToCharArray().Length > 5)
+                            throw new InvalidOperationException("Input string in wrong format, too many digits maximum for int16 is 5.");
+
+                        short value;
+                        try
+                        {
+                            value = short.Parse(str);
+                        }
+                        catch (Exception ex)
+                        {
+                            throw new InvalidOperationException("Failed to parse input to numeric type!", ex);
+                        }
+
+                        return (T)Convert.ChangeType(value, typeof(T));
+                    }
+                case { } intType when intType == typeof(int): // int32
                     {
                         if (!str.IsDigitOnly() && !str.Contains("-"))
                             throw new InvalidOperationException("Input string in wrong format, non-digit char other then '-' present.");
@@ -72,16 +110,19 @@ namespace Utils.String
                             throw new InvalidOperationException("Input string in wrong format, too many digits maximum for int32 is 10.");
 
                         int value;
-                        try {
+                        try 
+                        {
                             value = int.Parse(str);
                         }
-                        catch {
-                            throw;
+                        catch (Exception ex) 
+                        {
+                            throw new InvalidOperationException("Failed to parse input to numeric type!", ex);
                         }
                             
                         return (T) Convert.ChangeType(value, typeof(T));
                     }
-                case { } longType when longType == typeof(long):
+
+                case { } longType when longType == typeof(long): // int64
                     {
                         if (!str.IsDigitOnly() && !str.Contains("-"))
                             throw new InvalidOperationException("Input string in wrong format, non-digit char other then '-' present.");
@@ -89,11 +130,13 @@ namespace Utils.String
                             throw new InvalidOperationException("Input string in wrong format, too many digits maximum for int64 is 19.");
 
                         long value;
-                        try {
+                        try 
+                        {
                             value = long.Parse(str);
                         }
-                        catch {
-                            throw;
+                        catch (Exception ex)
+                        {
+                            throw new InvalidOperationException("Failed to parse input to numeric type!", ex);
                         }
 
                         return (T) Convert.ChangeType(value, typeof(T));
@@ -106,11 +149,13 @@ namespace Utils.String
                             throw new InvalidOperationException("Input string in wrong format, too many digits maximum for float is 9.");
                       
                         float value;
-                        try {
+                        try 
+                        {
                             value = float.Parse(str);
                         }
-                        catch {
-                            throw;
+                        catch (Exception ex)
+                        {
+                            throw new InvalidOperationException("Failed to parse input to numeric type!", ex);
                         }
 
                         return (T) Convert.ChangeType(value, typeof(T));
@@ -123,11 +168,13 @@ namespace Utils.String
                             throw new InvalidOperationException("Input string in wrong format, too many digits maximum for double is 17.");
 
                         double value;
-                        try {
+                        try 
+                        {
                             value = double.Parse(str);
                         }
-                        catch {
-                            throw;
+                        catch (Exception ex)
+                        {
+                            throw new InvalidOperationException("Failed to parse input to numeric type!", ex);
                         }
 
                         return (T) Convert.ChangeType(value, typeof(T));
@@ -140,11 +187,13 @@ namespace Utils.String
                             throw new InvalidOperationException("Input string in wrong format, too many digits maximum for decimal is 29.");
 
                         decimal value;
-                        try {
+                        try 
+                        {
                             value = decimal.Parse(str);
                         }
-                        catch {
-                            throw;
+                        catch (Exception ex)
+                        {
+                            throw new InvalidOperationException("Failed to parse input to numeric type!", ex);
                         }
 
                         return (T) Convert.ChangeType(value, typeof(T));
