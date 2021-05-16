@@ -20,8 +20,8 @@ namespace Utils.TestConsole
             const string digitStr = "316574541894516";
             const string digitStrfalse = "31s65745g41894s516";
 
-            Console.ConsoleExtensions.Log($"digitonly? {Console.ConsoleExtensions.YesNo(digitStr.IsDigitOnly())}", "info");
-            Console.ConsoleExtensions.Log($"digitonlyFalse? {Console.ConsoleExtensions.YesNo(digitStrfalse.IsDigitOnly())}", "info");
+            Console.ConsoleExtensions.Log($"digitonly? {Console.ConsoleExtensions.YesNo(digitStr.IsDigitsOnly())}", "info");
+            Console.ConsoleExtensions.Log($"digitonlyFalse? {Console.ConsoleExtensions.YesNo(digitStrfalse.IsDigitsOnly())}", "info");
 
             AnsiConsole.Render(Console.ConsoleExtensions.DirectorySummary("C:\\Games\\RimWorld"));
 
@@ -52,6 +52,12 @@ namespace Utils.TestConsole
             Console.ConsoleExtensions.Log($"enumCount: {enumCount}", "info");
             var enumDesc = lang.GetDescription();
             Console.ConsoleExtensions.Log($"enumDesc: {enumDesc}", "info");
+
+            const string endsWithDigits = "b54891stastassgfdahblab545lafgijfsdgisdogi ... 12 ... 1234 dfhgsdffhgsdf 1456";
+            var endsDigits = endsWithDigits.EndsWithDigits(4);
+            Console.ConsoleExtensions.Log($"endsDigits: {Console.ConsoleExtensions.YesNo(endsDigits)}", "info");
+            var endDigitStr = endsWithDigits.GetEndingDigits(4);
+            Console.ConsoleExtensions.Log($"endDigitStr: {endDigitStr}", "info");
         }
     }
 }

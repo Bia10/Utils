@@ -13,7 +13,7 @@ namespace Utils.Types.String
         }
 
         // by digit we mean only decimal digital number
-        public static bool IsDigitOnly(this string str)
+        public static bool IsDigitsOnly(this string str)
         {
             if (!str.Valid())
                 throw new InvalidOperationException("Input string in wrong format!");
@@ -27,6 +27,48 @@ namespace Utils.Types.String
                 throw new InvalidOperationException("Input string in wrong format!");
 
             return new string(str.Where(ch => ch.IsDigitNumber()).ToArray());
+        }
+
+        public static bool EndsWithDigits(this string str, int stopIndexFromEnd)
+        {
+            var indexOfLastStr = str.Length - 1;
+
+            if (!str.Valid())
+                throw new InvalidOperationException("Input string in wrong format!");
+            if (stopIndexFromEnd > indexOfLastStr || stopIndexFromEnd < 0)
+                throw new InvalidOperationException("StopIndex outside bounds of string!");
+
+            for (var i = indexOfLastStr; i > indexOfLastStr - stopIndexFromEnd; i--)
+            {
+                var currentString = str.Substring(i, 1);
+                if (!currentString.IsDigitsOnly()) return false;
+            }
+
+            return true;
+        }
+
+        public static string GetEndingDigits(this string str, int stopIndexFromEnd)
+        {
+            var indexOfLastStr = str.Length - 1;
+
+            if (!str.Valid())
+                throw new InvalidOperationException("Input string in wrong format!");
+            if (stopIndexFromEnd > indexOfLastStr || stopIndexFromEnd < 0)
+                throw new InvalidOperationException("StopIndex outside bounds of string!");
+
+            var indexList = new List<int>();
+            for (var i = indexOfLastStr; i > indexOfLastStr - stopIndexFromEnd; i--)
+            {
+                var currentString = str.Substring(i, 1);
+                if (currentString.IsDigitsOnly()) indexList.Add(i);
+            }
+
+            indexList.Sort();
+            var result = string.Empty;
+            foreach (var index in indexList)
+                result += str.Substring(index, 1);
+
+            return result;
         }
 
         public static bool ContainsSpecialDigitChar(this string str)
@@ -92,7 +134,7 @@ namespace Utils.Types.String
             {
                 case { } sbyteType when sbyteType == typeof(sbyte): // int8
                     {
-                    if (!str.IsDigitOnly() && !str.Contains("-"))
+                    if (!str.IsDigitsOnly() && !str.Contains("-"))
                         throw new InvalidOperationException("Input string in wrong format, non-digit char other then '-' present.");
                     if (str.ToCharArray().Length > 3)
                         throw new InvalidOperationException("Input string in wrong format, too many digits maximum for int8 is 3.");
@@ -111,7 +153,7 @@ namespace Utils.Types.String
                 }
                 case { } shortType when shortType == typeof(short): // int16
                     {
-                        if (!str.IsDigitOnly() && !str.Contains("-"))
+                        if (!str.IsDigitsOnly() && !str.Contains("-"))
                             throw new InvalidOperationException("Input string in wrong format, non-digit char other then '-' present.");
                         if (str.ToCharArray().Length > 5)
                             throw new InvalidOperationException("Input string in wrong format, too many digits maximum for int16 is 5.");
@@ -130,7 +172,7 @@ namespace Utils.Types.String
                     }
                 case { } intType when intType == typeof(int): // int32
                     {
-                        if (!str.IsDigitOnly() && !str.Contains("-"))
+                        if (!str.IsDigitsOnly() && !str.Contains("-"))
                             throw new InvalidOperationException("Input string in wrong format, non-digit char other then '-' present.");
                         if (str.ToCharArray().Length > 10)
                             throw new InvalidOperationException("Input string in wrong format, too many digits maximum for int32 is 10.");
@@ -150,7 +192,7 @@ namespace Utils.Types.String
 
                 case { } longType when longType == typeof(long): // int64
                     {
-                        if (!str.IsDigitOnly() && !str.Contains("-"))
+                        if (!str.IsDigitsOnly() && !str.Contains("-"))
                             throw new InvalidOperationException("Input string in wrong format, non-digit char other then '-' present.");
                         if (str.ToCharArray().Length > 19)
                             throw new InvalidOperationException("Input string in wrong format, too many digits maximum for int64 is 19.");
@@ -169,7 +211,7 @@ namespace Utils.Types.String
                     }
                 case { } floatType when floatType == typeof(float):
                     {
-                        if (!str.IsDigitOnly() && !str.ContainsSpecialDigitChar())
+                        if (!str.IsDigitsOnly() && !str.ContainsSpecialDigitChar())
                             throw new InvalidOperationException("Input string in wrong format, non-digit char other then '-' present.");
                         if (str.ToCharArray().Length > 9)
                             throw new InvalidOperationException("Input string in wrong format, too many digits maximum for float is 9.");
@@ -188,7 +230,7 @@ namespace Utils.Types.String
                     }
                 case { } doubleType when doubleType == typeof(double):
                     {
-                        if (!str.IsDigitOnly() && !str.ContainsSpecialDigitChar())
+                        if (!str.IsDigitsOnly() && !str.ContainsSpecialDigitChar())
                             throw new InvalidOperationException("Input string in wrong format, non-digit char other then '-' present.");
                         if (str.ToCharArray().Length > 17)
                             throw new InvalidOperationException("Input string in wrong format, too many digits maximum for double is 17.");
@@ -207,7 +249,7 @@ namespace Utils.Types.String
                     }
                 case { } decimalType when decimalType == typeof(decimal):
                     {
-                        if (!str.IsDigitOnly() && !str.ContainsSpecialDigitChar())
+                        if (!str.IsDigitsOnly() && !str.ContainsSpecialDigitChar())
                             throw new InvalidOperationException("Input string in wrong format, non-digit char other then '-' present.");
                         if (str.ToCharArray().Length > 29)
                             throw new InvalidOperationException("Input string in wrong format, too many digits maximum for decimal is 29.");
