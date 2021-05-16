@@ -1,7 +1,7 @@
 ﻿using Spectre.Console;
 using Utils.Enumeration;
-using Utils.String;
-using Utils.Types;
+using Utils.Types.Enum;
+using Utils.Types.String;
 
 namespace Utils.TestConsole
 {

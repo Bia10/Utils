@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Utils.String;
+using Utils.Types.String;
 
 namespace Utils.Console
 {

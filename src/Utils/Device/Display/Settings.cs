@@ -3,8 +3,8 @@ using System.Runtime.InteropServices;
 using Utils.Console;
 using Utils.Device.Display.Enums;
 using Utils.Device.Display.Structures;
-using Utils.String;
-using Utils.Types;
+using Utils.Types.Enum;
+using Utils.Types.String;
 using Utils.Win32API;
 
 namespace Utils.Device.Display

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Net;
-using Utils.String;
+using Utils.Types.String;
 
 namespace Utils.Net
 {

@@ -1,22 +1,22 @@
 ﻿using System;
 using Utils.Reflection;
 
-namespace Utils.Types
+namespace Utils.Types.Enum
 {
     public static class EnumExtensions
     {
-        public static int ToInt(this Enum @enum)
+        public static int ToInt(this System.Enum @enum)
         {
             return (int)(IConvertible)@enum;
         }
 
         public static int CountMembers<T>(this T _) 
-            where T: Enum
+            where T: System.Enum
         {
-            return Enum.GetNames(typeof(T)).Length;
+            return System.Enum.GetNames(typeof(T)).Length;
         }
 
-        public static string GetDescription(this Enum value)
+        public static string GetDescription(this System.Enum value)
         {
             return value.GetDescriptionAttribute();
         }

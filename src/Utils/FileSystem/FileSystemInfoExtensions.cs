@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using Utils.String;
+using Utils.Types.String;
 
 namespace Utils.FileSystem
 {

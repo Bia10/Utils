@@ -3,7 +3,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using Utils.Console;
-using Utils.String;
+using Utils.Types.String;
 
 namespace Utils.Process
 {

@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Utils.Types.Char;
 
-namespace Utils.String
+namespace Utils.Types.String
 {
     public static class StringExtensions
     {
@@ -10,12 +12,13 @@ namespace Utils.String
             return !string.IsNullOrEmpty(str) && !string.IsNullOrWhiteSpace(str);
         }
 
+        // by digit we mean only decimal digital number
         public static bool IsDigitOnly(this string str)
         {
             if (!str.Valid())
                 throw new InvalidOperationException("Input string in wrong format!");
 
-            return str.All(char.IsDigit);
+            return str.ToCharArray().All(ch => ch.IsDigitNumber());
         }
 
         public static string GetDigitsOnly(this string str)
@@ -23,7 +26,7 @@ namespace Utils.String
             if (!str.Valid())
                 throw new InvalidOperationException("Input string in wrong format!");
 
-            return new string(str.Where(char.IsDigit).ToArray());
+            return new string(str.Where(ch => ch.IsDigitNumber()).ToArray());
         }
 
         public static bool ContainsSpecialDigitChar(this string str)
@@ -44,6 +47,29 @@ namespace Utils.String
                 throw new InvalidOperationException("Input params empty!");
 
             return strings.Any(str.Contains); 
+        }
+
+        public static bool ContainsAnySequenceOf(this string str, List<char> charArray)
+        {
+            if (!str.Valid())
+                throw new InvalidOperationException("Input string in wrong format!");
+            if (!charArray.Any())
+                throw new InvalidOperationException("Input params empty!");
+
+            var matchingChars = charArray.Where(char1 =>
+                str.ToCharArray().Any(char2 => char2.Equals(char1)));
+
+            foreach (var ch in matchingChars)
+            {
+                charArray.Remove(ch);
+
+                var startIndex = str.IndexOf(ch);
+                var length = Math.Min(str.Length - str.IndexOf(ch), charArray.Count);
+
+                return str.Substring(startIndex, length).ContainsAnySequenceOf(charArray);
+            }
+
+            return false;
         }
 
         public static string StringBetweenStrings(this string str, string start, string end)
