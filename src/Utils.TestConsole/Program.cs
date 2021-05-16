@@ -53,7 +53,7 @@ namespace Utils.TestConsole
             var enumDesc = lang.GetDescription();
             Console.ConsoleExtensions.Log($"enumDesc: {enumDesc}", "info");
 
-            const string endsWithDigits = "b54891stastassgfdahblab545lafgijfsdgisdogi ... 12 ... 1234 dfhgsdffhgsdf 1456";
+            const string endsWithDigits = "b54891stastassgfdahblab545lafgijfsdgisdogi ... 12 ... 1234 dfhgsdffhgsdf 14 56";
             var endsDigits = endsWithDigits.EndsWithDigits(4);
             Console.ConsoleExtensions.Log($"endsDigits: {Console.ConsoleExtensions.YesNo(endsDigits)}", "info");
             var endDigitStr = endsWithDigits.GetDigitsFromEnd(4);

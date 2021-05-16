@@ -57,6 +57,7 @@ namespace Utils.Types.String
             for (var i = indexOfLastStr; i > indexOfLastStr - stopIndexFromEnd; i--)
             {
                 var currentString = str.Substring(i, 1);
+                if (currentString.Equals(" ")) continue;
                 if (!currentString.IsDigitsOnly()) return false;
             }
 
@@ -76,6 +77,7 @@ namespace Utils.Types.String
             for (var i = indexOfLastStr; i > indexOfLastStr - stopIndex; i--)
             {
                 var currentString = str.Substring(i, 1);
+                if (currentString.Equals(" ")) continue;
                 if (currentString.IsDigitsOnly()) indexList.Add(i);
             }
 
