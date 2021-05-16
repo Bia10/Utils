@@ -12,6 +12,22 @@ namespace Utils.Types.String
             return !string.IsNullOrEmpty(str) && !string.IsNullOrWhiteSpace(str);
         }
 
+        public static string Tail(this string str, int tailLength)
+        {
+            if (!str.Valid())
+                throw new InvalidOperationException("Input string in wrong format!");
+
+            return tailLength >= str.Length ? str : str[^tailLength..];
+        }
+
+        public static string Head(this string str, int headLength)
+        {
+            if (!str.Valid())
+                throw new InvalidOperationException("Input string in wrong format!");
+
+            return headLength >= str.Length ? str : str[..headLength];
+        }
+
         // by digit we mean only decimal digital number
         public static bool IsDigitsOnly(this string str)
         {
@@ -47,17 +63,17 @@ namespace Utils.Types.String
             return true;
         }
 
-        public static string GetEndingDigits(this string str, int stopIndexFromEnd)
+        public static string GetDigitsFromEnd(this string str, int stopIndex)
         {
             var indexOfLastStr = str.Length - 1;
 
             if (!str.Valid())
                 throw new InvalidOperationException("Input string in wrong format!");
-            if (stopIndexFromEnd > indexOfLastStr || stopIndexFromEnd < 0)
+            if (stopIndex > indexOfLastStr || stopIndex < 0)
                 throw new InvalidOperationException("StopIndex outside bounds of string!");
 
             var indexList = new List<int>();
-            for (var i = indexOfLastStr; i > indexOfLastStr - stopIndexFromEnd; i--)
+            for (var i = indexOfLastStr; i > indexOfLastStr - stopIndex; i--)
             {
                 var currentString = str.Substring(i, 1);
                 if (currentString.IsDigitsOnly()) indexList.Add(i);

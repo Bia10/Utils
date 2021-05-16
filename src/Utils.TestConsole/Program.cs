@@ -56,8 +56,9 @@ namespace Utils.TestConsole
             const string endsWithDigits = "b54891stastassgfdahblab545lafgijfsdgisdogi ... 12 ... 1234 dfhgsdffhgsdf 1456";
             var endsDigits = endsWithDigits.EndsWithDigits(4);
             Console.ConsoleExtensions.Log($"endsDigits: {Console.ConsoleExtensions.YesNo(endsDigits)}", "info");
-            var endDigitStr = endsWithDigits.GetEndingDigits(4);
+            var endDigitStr = endsWithDigits.GetDigitsFromEnd(4);
             Console.ConsoleExtensions.Log($"endDigitStr: {endDigitStr}", "info");
+            Console.ConsoleExtensions.Log($"head: {endsWithDigits.Head(5)} tail: {endsWithDigits.Tail(5)}", "info");
         }
     }
 }
