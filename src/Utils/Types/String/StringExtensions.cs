@@ -28,6 +28,40 @@ namespace Utils.Types.String
             return headLength >= str.Length ? str : str[..headLength];
         }
 
+        public static string Left(this string str, int count)
+        {
+            if (!str.Valid())
+                throw new InvalidOperationException("Input string in wrong format!");
+
+            return str[..Math.Min(str.Length, count)];
+        }
+
+        public static string Right(this string str, int count)
+        {
+            if (!str.Valid())
+                throw new InvalidOperationException("Input string in wrong format!");
+
+            return str.Substring(Math.Max(str.Length - count, 0),
+                Math.Min(count, str.Length));
+        }
+
+        public static string Middle(this string str, int start)
+        {
+            if (!str.Valid())
+                throw new InvalidOperationException("Input string in wrong format!");
+
+            return str[Math.Min(start, str.Length)..];
+        }
+
+        public static string Middle(this string str, int start, int count)
+        {
+            if (!str.Valid())
+                throw new InvalidOperationException("Input string in wrong format!");
+
+            return str.Substring(Math.Min(start, str.Length),
+                Math.Min(count, Math.Max(str.Length - start, 0)));
+        }
+
         // by digit we mean only decimal digital number
         public static bool IsDigitsOnly(this string str)
         {
