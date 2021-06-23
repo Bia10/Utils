@@ -59,6 +59,10 @@ namespace Utils.TestConsole
             var endDigitStr = endsWithDigits.GetDigitsFromEnd(4);
             Console.ConsoleExtensions.Log($"endDigitStr: {endDigitStr}", "info");
             Console.ConsoleExtensions.Log($"head: {endsWithDigits.Head(5)} tail: {endsWithDigits.Tail(5)}", "info");
+
+            const string rn = "blblbl" + "\r\n" + "56748946";
+            Console.ConsoleExtensions.Log($"rn: {rn}", "info");
+            Console.ConsoleExtensions.Log($"rn.RemoveLineBreaks(): {rn.RemoveLineBreaks()}", "info");
         }
     }
 }

@@ -143,6 +143,41 @@ namespace Utils.Types.String
             return string.IsNullOrEmpty(end) ? str[indexOfStart..] : str[indexOfStart..indexOfEnd];
         }
 
+        public static string RemoveLineBreaks(this string str)
+        {
+            if (!str.Valid())
+                throw new InvalidOperationException("Input string in wrong format!");
+
+            return str.Replace("\r", string.Empty)
+                .Replace("\n", string.Empty);
+        }
+
+        public static string ReplaceLineBreaks(this string str, string replacement)
+        {
+            if (!str.Valid())
+                throw new InvalidOperationException("Input string in wrong format!");
+
+            return str.Replace("\r\n", replacement)
+                .Replace("\r", replacement)
+                .Replace("\n", replacement);
+        }
+
+        public static string SurroundWithDoubleQuotes(this string str)
+        {
+            if (!str.Valid())
+                throw new InvalidOperationException("Input string in wrong format!");
+
+            return SurroundWith(str, "\"");
+        }
+
+        public static string SurroundWith(this string str, string endMark)
+        {
+            if (!str.Valid())
+                throw new InvalidOperationException("Input string in wrong format!");
+
+            return endMark + str + endMark;
+        }
+
         public static T To<T>(this string str)  //TODO: unsigned types, more checks
         {
             if (!str.Valid())
