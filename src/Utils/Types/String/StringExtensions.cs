@@ -212,6 +212,17 @@ namespace Utils.Types.String
             return endMark + str + endMark;
         }
 
+        public static string FirstCharToUpper(this string str)
+        {
+            if (!str.Valid())
+                throw new InvalidOperationException("Input string in wrong format!");
+
+            if (str.Length == 1)
+                return char.ToUpper(str[0]).ToString();
+
+            return char.ToUpper(str[0]) + str[1..];
+        }
+
         public static T To<T>(this string str)  //TODO: unsigned types, more checks
         {
             if (!str.Valid())
