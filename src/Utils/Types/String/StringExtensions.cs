@@ -166,6 +166,23 @@ namespace Utils.Types.String
             return false;
         }
 
+        public static string ReplaceAny(this string str, IEnumerable<string> toReplace, string replacement = "")
+        {
+            var result = string.Empty;
+
+            foreach (var strToReplace in toReplace)
+                if(result.Contains(strToReplace))
+                    result = str.Replace(strToReplace, replacement);
+
+            return result;
+        }
+
+        public static string RemoveForbiddenFilenameChars(this string str)
+        {
+            var forbiddenChars = new[] { "<", ">", ":", "\"", "/", "\\", "|", "?", "*"};
+            return str.ReplaceAny(forbiddenChars);
+        }
+
         public static string StringBetweenStrings(this string str, string start, string end)
         {
             if (!str.Valid())
