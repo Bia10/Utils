@@ -65,8 +65,11 @@ namespace Utils.TestConsole
             Console.ConsoleExtensions.Log($"rn.RemoveLineBreaks(): {rn.RemoveLineBreaks()}", "info");
 
             const string firsToUpper = "red green";
-            Console.ConsoleExtensions.Log($"firsToUpper: {firsToUpper}", "info"); 
+            Console.ConsoleExtensions.Log($"firsToUpper: {firsToUpper}", "info");
             Console.ConsoleExtensions.Log($"firsToUpper.FirstCharToUpper(): {firsToUpper.FirstCharToUpper()}", "info");
+
+            const string url = "https://www.youtube.com/";
+            Console.ConsoleExtensions.Log($"url: {url.ReplaceForbiddenFilenameChars("_")}", "info");
         }
     }
 }

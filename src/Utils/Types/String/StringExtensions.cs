@@ -166,20 +166,27 @@ namespace Utils.Types.String
             return false;
         }
 
-        public static string ReplaceAny(this string str, IEnumerable<string> toReplace, string replacement = "")
+        public static string ReplaceAny(this string str, string[] toReplace, string replacement = "")
         {
-            var result = string.Empty;
+            if (!str.Valid())
+                throw new InvalidOperationException("Input string in wrong format!");
+            if (!toReplace.Any())
+                throw new InvalidOperationException("Input params empty!");
 
             foreach (var strToReplace in toReplace)
-                if(result.Contains(strToReplace))
-                    result = str.Replace(strToReplace, replacement);
+                if(str.Contains(strToReplace))
+                    str = str.Replace(strToReplace, replacement);
 
-            return result;
+            return str;
         }
 
         public static string ReplaceForbiddenFilenameChars(this string str, string replacement = "")
         {
+            if (!str.Valid())
+                throw new InvalidOperationException("Input string in wrong format!");
+
             var forbiddenChars = new[] { "<", ">", ":", "\"", "/", "\\", "|", "?", "*"};
+
             return str.ReplaceAny(forbiddenChars, replacement);
         }
 
