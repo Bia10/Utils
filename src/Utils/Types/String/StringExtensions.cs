@@ -177,10 +177,10 @@ namespace Utils.Types.String
             return result;
         }
 
-        public static string RemoveForbiddenFilenameChars(this string str)
+        public static string ReplaceForbiddenFilenameChars(this string str, string replacement = "")
         {
             var forbiddenChars = new[] { "<", ">", ":", "\"", "/", "\\", "|", "?", "*"};
-            return str.ReplaceAny(forbiddenChars);
+            return str.ReplaceAny(forbiddenChars, replacement);
         }
 
         public static string StringBetweenStrings(this string str, string start, string end)
