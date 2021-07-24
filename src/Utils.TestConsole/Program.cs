@@ -1,4 +1,5 @@
 ﻿using Spectre.Console;
+using System.ComponentModel;
 using Utils.Enumeration;
 using Utils.Types.Enum;
 using Utils.Types.String;
@@ -13,6 +14,16 @@ namespace Utils.TestConsole
             De = 1,
             Fr = 2,
             Ru = 3,
+        }
+
+        private enum describedEnum
+        {
+            [Description("fooo")]
+            fuxx = 0,
+            [Description("bar")]
+            bar = 1,
+            [Description("fxxxx")]
+            fxxxx = 2
         }
 
         private static void Main()
@@ -70,6 +81,9 @@ namespace Utils.TestConsole
 
             const string url = "https://www.youtube.com/";
             Console.ConsoleExtensions.Log($"url: {url.ReplaceForbiddenFilenameChars("_")}", "info");
+
+            var x = "fooo".GetValueFromEnumDescription<describedEnum>();
+            Console.ConsoleExtensions.Log($"enum value: {x}", "info");
         }
     }
 }

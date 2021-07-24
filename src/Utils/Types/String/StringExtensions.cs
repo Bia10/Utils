@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Utils.Types.Char;
 
@@ -245,6 +246,28 @@ namespace Utils.Types.String
                 return char.ToUpper(str[0]).ToString();
 
             return char.ToUpper(str[0]) + str[1..];
+        }
+
+        public static T GetValueFromEnumDescription<T>(this string str)
+            where T : System.Enum
+        {
+            foreach (var field in typeof(T).GetFields())
+            {
+                if (Attribute.GetCustomAttribute(field, typeof(DescriptionAttribute))
+                    is DescriptionAttribute attribute)
+                {
+                    if (attribute.Description == str)
+                        return (T)field.GetValue(null);
+                }
+                else
+                {
+                    if (field.Name == str)
+                        return (T)field.GetValue(null);
+                }
+            }
+
+            throw new ArgumentException("Not found.", nameof(str));
+            //return default;
         }
 
         public static T To<T>(this string str)  //TODO: unsigned types, more checks
