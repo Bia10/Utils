@@ -181,6 +181,15 @@ namespace Utils.Types.String
             return str;
         }
 
+        public static string ReplaceAt(this string str, int index, int length, string replacement = "")
+        {
+            if (!str.Valid())
+                throw new InvalidOperationException("Input string in wrong format!");
+
+            return str.Remove(index, Math.Min(length, str.Length - index))
+                .Insert(index, replacement);
+        }
+
         public static string ReplaceForbiddenFilenameChars(this string str, string replacement = "")
         {
             if (!str.Valid())
@@ -246,6 +255,74 @@ namespace Utils.Types.String
                 return char.ToUpper(str[0]).ToString();
 
             return char.ToUpper(str[0]) + str[1..];
+        }
+
+        public static IEnumerable<int> AllIndicesOf(this string str, string pattern)
+        {
+            if (!str.Valid())
+                throw new InvalidOperationException("Input string in wrong format!");
+
+            //Knuth–Morris–Pratt algorithm
+            var M = pattern.Length;
+            var N = str.Length;
+            var lps = pattern.GetLongestPrefixSuffix();
+            int i = 0, j = 0;
+
+            while (i < N)
+            {
+                if (pattern[j] == str[i])
+                {
+                    j++;
+                    i++;
+                }
+                if (j == M)
+                {
+                    yield return i - j;
+                    j = lps[j - 1];
+                }
+                else if (i < N && pattern[j] != str[i])
+                {
+                    if (j != 0)
+                    {
+                        j = lps[j - 1];
+                    }
+                    else
+                    {
+                        i++;
+                    }
+                }
+            }
+        }
+
+        public static int[] GetLongestPrefixSuffix(this string str)
+        {
+            var lps = new int[str.Length];
+            var length = 0;
+            var i = 1;
+
+            while (i < str.Length)
+            {
+                if (str[i] == str[length])
+                {
+                    length++;
+                    lps[i] = length;
+                    i++;
+                }
+                else
+                {
+                    if (length != 0)
+                    {
+                        length = lps[length - 1];
+                    }
+                    else
+                    {
+                        lps[i] = length;
+                        i++;
+                    }
+                }
+            }
+
+            return lps;
         }
 
         public static T GetValueFromEnumDescription<T>(this string str)

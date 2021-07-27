@@ -1,4 +1,6 @@
-﻿using Spectre.Console;
+﻿using System;
+using System.Collections.Generic;
+using Spectre.Console;
 using System.ComponentModel;
 using Utils.Enumeration;
 using Utils.Types.Enum;
@@ -84,6 +86,19 @@ namespace Utils.TestConsole
 
             var x = "fooo".GetValueFromEnumDescription<describedEnum>();
             Console.ConsoleExtensions.Log($"enum value: {x}", "info");
+
+            var indicesSTr = "ZArray<ZPair<long,long> > aPotionDiscountRate;";
+            const string pattern = " >";
+            List<int> indices = new();
+            indices.AddRange(indicesSTr.AllIndicesOf(pattern));
+
+            foreach (var n in indices)
+            {
+                Console.ConsoleExtensions.Log($"Pattern: {pattern} found at: {n}", "info");
+                indicesSTr = indicesSTr.ReplaceAt(n, 1);
+            }
+
+            Console.ConsoleExtensions.Log($"Replaced: {indicesSTr}", "info");
         }
     }
 }
