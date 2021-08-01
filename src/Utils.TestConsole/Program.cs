@@ -102,6 +102,7 @@ namespace Utils.TestConsole
 
             const string testStr1 = "short nir";
             const string testStr2 = "short int";
+            const string testStr3 = "short n";
             var testList1 = new List<string>() { testStr1 };
             var testList2 = new List<string>() { testStr2 };
 
@@ -109,6 +110,7 @@ namespace Utils.TestConsole
             Console.ConsoleExtensions.Log($"StrHashEqual: {testList1.StrHashEqualTo(testList2)}", "info");
             Console.ConsoleExtensions.Log($"StringsEqual: {testStr1.StringEqualTo(testStr2)}", "info");
             Console.ConsoleExtensions.Log($"StrictlyCharEqual: {testStr1.StrictlyCharEqualTo(testStr2)}", "info");
+            Console.ConsoleExtensions.Log($"HeadSizeOfStrB: {testStr1.HeadSizeOfStrB(testStr3)}", "info");
         }
     }
 }

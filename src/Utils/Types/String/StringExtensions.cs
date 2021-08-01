@@ -29,6 +29,11 @@ namespace Utils.Types.String
             return headLength >= str.Length ? str : str[..headLength];
         }
 
+        public static string HeadSizeOfStrB(this string str, string strB)
+        {
+            return str.Head(strB.Length);
+        }
+
         public static string Left(this string str, int count)
         {
             if (!str.Valid())
@@ -105,11 +110,6 @@ namespace Utils.Types.String
             var areStringEqual = str.StringEqualTo(strB);
 
             return areHashEqual && areStringEqual;
-        }
-
-        public static string GetSubStringSizeOfTypeStr(this string str, string typeStr)
-        {
-            return str.Length >= typeStr.Length ? str[..typeStr.Length] : string.Empty;
         }
 
         // by digit we mean only decimal digital number
