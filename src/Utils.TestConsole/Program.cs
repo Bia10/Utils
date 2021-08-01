@@ -99,6 +99,16 @@ namespace Utils.TestConsole
             }
 
             Console.ConsoleExtensions.Log($"Replaced: {indicesSTr}", "info");
+
+            const string testStr1 = "short nir";
+            const string testStr2 = "short int";
+            var testList1 = new List<string>() { testStr1 };
+            var testList2 = new List<string>() { testStr2 };
+
+            Console.ConsoleExtensions.Log($"CharHashEqual: {testStr1.CharHashEqualTo(testStr2)}", "info");
+            Console.ConsoleExtensions.Log($"StrHashEqual: {testList1.StrHashEqualTo(testList2)}", "info");
+            Console.ConsoleExtensions.Log($"StringsEqual: {testStr1.StringEqualTo(testStr2)}", "info");
+            Console.ConsoleExtensions.Log($"StrictlyCharEqual: {testStr1.StrictlyCharEqualTo(testStr2)}", "info");
         }
     }
 }

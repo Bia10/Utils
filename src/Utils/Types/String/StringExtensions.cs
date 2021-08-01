@@ -63,6 +63,55 @@ namespace Utils.Types.String
                 Math.Min(count, Math.Max(str.Length - start, 0)));
         }
 
+        public static bool StringEqualTo(this string str, string strB)
+        {
+            if (!str.Valid())
+                throw new InvalidOperationException("Input string in wrong format!");
+
+            var result = string.CompareOrdinal(str, strB);
+
+            return result == 0;
+        }
+
+        public static bool CharHashEqualTo(this string str, string strB)
+        {
+            if (!str.Valid())
+                throw new InvalidOperationException("Input string in wrong format!");
+
+            var aSet = new HashSet<char>(str);
+            var bSet = new HashSet<char>(strB);
+
+            var areHashEqual = aSet.SetEquals(bSet);
+
+            return areHashEqual;
+        }
+
+        public static bool StrHashEqualTo(this IEnumerable<string> str, IEnumerable<string> strB)
+        {
+            var aSet = new HashSet<string>(str);
+            var bSet = new HashSet<string>(strB);
+
+            var areHashEqual = aSet.SetEquals(bSet);
+
+            return areHashEqual;
+        }
+
+        public static bool StrictlyCharEqualTo(this string str, string strB)
+        {
+            if (!str.Valid())
+                throw new InvalidOperationException("Input string in wrong format!");
+
+            var areHashEqual = str.CharHashEqualTo(strB);
+            var areStringEqual = str.StringEqualTo(strB);
+
+            return areHashEqual && areStringEqual;
+        }
+
+        public static string GetSubStringSizeOfTypeStr(this string str, string typeStr)
+        {
+            return str.Length >= typeStr.Length ? str[..typeStr.Length] : string.Empty;
+        }
+
         // by digit we mean only decimal digital number
         public static bool IsDigitsOnly(this string str)
         {
