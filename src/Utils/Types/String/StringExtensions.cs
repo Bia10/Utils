@@ -306,6 +306,40 @@ namespace Utils.Types.String
             return char.ToUpper(str[0]) + str[1..];
         }
 
+        public static string[] SplitAt(this string str, params int[] index)
+        {
+            if (!str.Valid())
+                throw new InvalidOperationException("Input string in wrong format!");
+
+            index = index.Distinct().OrderBy(x => x).ToArray();
+            var output = new string[index.Length + 1];
+            var pos = 0;
+
+            for (var i = 0; i < index.Length; pos = index[i++])
+                output[i] = str[pos..index[i]];
+
+            output[index.Length] = str[pos..];
+            return output;
+        }
+
+        public static string[] SplitIfNotPrecededByChar(this string str, string splitPattern, char precedingChar)
+        {
+            if (!str.Valid())
+                throw new InvalidOperationException("Input string in wrong format!");
+
+            var result = Array.Empty<string>();
+
+            foreach (var index in str.AllIndicesOf(splitPattern))
+            {
+                if (str.ToCharArray()[index - 1] == precedingChar)
+                    continue;
+
+                result = str.SplitAt(index);
+            }
+
+            return result;
+        }
+
         public static IEnumerable<int> AllIndicesOf(this string str, string pattern)
         {
             if (!str.Valid())

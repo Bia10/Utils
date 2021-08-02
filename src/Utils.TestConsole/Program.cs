@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Spectre.Console;
 using System.ComponentModel;
+using System.Security.Cryptography.X509Certificates;
 using Utils.Enumeration;
 using Utils.Types.Enum;
 using Utils.Types.String;
@@ -111,6 +112,10 @@ namespace Utils.TestConsole
             Console.ConsoleExtensions.Log($"StringsEqual: {testStr1.StringEqualTo(testStr2)}", "info");
             Console.ConsoleExtensions.Log($"StrictlyCharEqual: {testStr1.StrictlyCharEqualTo(testStr2)}", "info");
             Console.ConsoleExtensions.Log($"HeadSizeOfStrB: {testStr1.HeadSizeOfStrB(testStr3)}", "info");
+
+            const string testStr4 = "ZArray<ZPair<long, long>> aPotionDiscountRate;";
+            var split = testStr4.SplitIfNotPrecededByChar(" ", ',');
+            Console.ConsoleExtensions.Log($"Split0 {split[0]} Split1 {split[1]}", "info");
         }
     }
 }
