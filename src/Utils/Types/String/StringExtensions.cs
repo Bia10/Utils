@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Text;
 using Utils.Types.Char;
 
 namespace Utils.Types.String
@@ -408,9 +409,60 @@ namespace Utils.Types.String
             return lps;
         }
 
+        public static byte[] ToByteArray(this string str, Encoding encoding)
+        {
+            if (!str.Valid())
+                throw new InvalidOperationException("Input string in wrong format!");
+
+            return encoding.GetBytes(str);
+        }
+
+        public static byte[] EncodeToBytes(this string str)
+        {
+            if (!str.Valid())
+                throw new InvalidOperationException("Input string in wrong format!");
+
+            var bytes = new byte[str.Length * sizeof(char)];
+
+            try
+            {
+                Buffer.BlockCopy(str.ToCharArray(), 0, bytes, 0, bytes.Length);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Failed to copy chars to bytes!", ex);
+            }
+
+            return bytes;
+        }
+
+        public static byte[] DecodeToBytes(this string str)
+        {
+            if (!str.Valid())
+                throw new InvalidOperationException("Input string in wrong format!");
+
+            var even = str[0] == '0';
+            var bytes = new byte[(str.Length - 1) * sizeof(char) + (even ? 0 : -1)];
+            var chars = str.ToCharArray();
+
+            try
+            {
+                Buffer.BlockCopy(chars, 2, bytes, 0, bytes.Length);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Failed to copy chars to bytes!", ex);
+            }
+
+            return bytes;
+        }
+
         public static T GetValueFromEnumDescription<T>(this string str)
             where T : System.Enum
         {
+            if (!str.Valid())
+                throw new InvalidOperationException("Input string in wrong format!");
+
             foreach (var field in typeof(T).GetFields())
             {
                 if (Attribute.GetCustomAttribute(field, typeof(DescriptionAttribute))
@@ -439,23 +491,23 @@ namespace Utils.Types.String
             {
                 case { } sbyteType when sbyteType == typeof(sbyte): // int8
                     {
-                    if (!str.IsDigitsOnly() && !str.Contains("-"))
-                        throw new InvalidOperationException("Input string in wrong format, non-digit char other then '-' present.");
-                    if (str.ToCharArray().Length > 3)
-                        throw new InvalidOperationException("Input string in wrong format, too many digits maximum for int8 is 3.");
+                        if (!str.IsDigitsOnly() && !str.Contains("-"))
+                            throw new InvalidOperationException("Input string in wrong format, non-digit char other then '-' present.");
+                        if (str.ToCharArray().Length > 3)
+                            throw new InvalidOperationException("Input string in wrong format, too many digits maximum for int8 is 3.");
 
-                    sbyte value;
-                    try
-                    {
-                        value = sbyte.Parse(str);
-                    }
-                    catch (Exception ex)
-                    {
-                        throw new InvalidOperationException("Failed to parse input to numeric type!", ex);
-                    }
+                        sbyte value;
+                        try
+                        {
+                            value = sbyte.Parse(str);
+                        }
+                        catch (Exception ex)
+                        {
+                            throw new InvalidOperationException("Failed to parse input to numeric type!", ex);
+                        }
 
-                    return (T)Convert.ChangeType(value, typeof(T));
-                }
+                        return (T)Convert.ChangeType(value, typeof(T));
+                    }
                 case { } shortType when shortType == typeof(short): // int16
                     {
                         if (!str.IsDigitsOnly() && !str.Contains("-"))
@@ -494,7 +546,6 @@ namespace Utils.Types.String
                             
                         return (T) Convert.ChangeType(value, typeof(T));
                     }
-
                 case { } longType when longType == typeof(long): // int64
                     {
                         if (!str.IsDigitsOnly() && !str.Contains("-"))
