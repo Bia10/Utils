@@ -17,7 +17,7 @@ namespace Utils.Types.String
         public static string Tail(this string str, int tailLength)
         {
             if (!str.Valid())
-                throw new InvalidOperationException("Input string in wrong format!");
+                throw new ArgumentException("Input string in wrong format!");
 
             return tailLength >= str.Length ? str : str[^tailLength..];
         }
@@ -25,7 +25,7 @@ namespace Utils.Types.String
         public static string Head(this string str, int headLength)
         {
             if (!str.Valid())
-                throw new InvalidOperationException("Input string in wrong format!");
+                throw new ArgumentException("Input string in wrong format!");
 
             return headLength >= str.Length ? str : str[..headLength];
         }
@@ -38,7 +38,7 @@ namespace Utils.Types.String
         public static string Left(this string str, int count)
         {
             if (!str.Valid())
-                throw new InvalidOperationException("Input string in wrong format!");
+                throw new ArgumentException("Input string in wrong format!");
 
             return str[..Math.Min(str.Length, count)];
         }
@@ -46,7 +46,7 @@ namespace Utils.Types.String
         public static string Right(this string str, int count)
         {
             if (!str.Valid())
-                throw new InvalidOperationException("Input string in wrong format!");
+                throw new ArgumentException("Input string in wrong format!");
 
             return str.Substring(Math.Max(str.Length - count, 0),
                 Math.Min(count, str.Length));
@@ -55,7 +55,7 @@ namespace Utils.Types.String
         public static string Middle(this string str, int start)
         {
             if (!str.Valid())
-                throw new InvalidOperationException("Input string in wrong format!");
+                throw new ArgumentException("Input string in wrong format!");
 
             return str[Math.Min(start, str.Length)..];
         }
@@ -63,7 +63,7 @@ namespace Utils.Types.String
         public static string Middle(this string str, int start, int count)
         {
             if (!str.Valid())
-                throw new InvalidOperationException("Input string in wrong format!");
+                throw new ArgumentException("Input string in wrong format!");
 
             return str.Substring(Math.Min(start, str.Length),
                 Math.Min(count, Math.Max(str.Length - start, 0)));
@@ -72,7 +72,7 @@ namespace Utils.Types.String
         public static bool StringEqualTo(this string str, string strB)
         {
             if (!str.Valid())
-                throw new InvalidOperationException("Input string in wrong format!");
+                throw new ArgumentException("Input string in wrong format!");
 
             var result = string.CompareOrdinal(str, strB);
 
@@ -82,7 +82,7 @@ namespace Utils.Types.String
         public static bool CharHashEqualTo(this string str, string strB)
         {
             if (!str.Valid())
-                throw new InvalidOperationException("Input string in wrong format!");
+                throw new ArgumentException("Input string in wrong format!");
 
             var aSet = new HashSet<char>(str);
             var bSet = new HashSet<char>(strB);
@@ -105,7 +105,7 @@ namespace Utils.Types.String
         public static bool StrictlyCharEqualTo(this string str, string strB)
         {
             if (!str.Valid())
-                throw new InvalidOperationException("Input string in wrong format!");
+                throw new ArgumentException("Input string in wrong format!");
 
             var areHashEqual = str.CharHashEqualTo(strB);
             var areStringEqual = str.StringEqualTo(strB);
@@ -117,7 +117,7 @@ namespace Utils.Types.String
         public static bool IsDigitsOnly(this string str)
         {
             if (!str.Valid())
-                throw new InvalidOperationException("Input string in wrong format!");
+                throw new ArgumentException("Input string in wrong format!");
 
             return str.ToCharArray().All(ch => ch.IsDigitNumber());
         }
@@ -125,7 +125,7 @@ namespace Utils.Types.String
         public static string GetDigitsOnly(this string str)
         {
             if (!str.Valid())
-                throw new InvalidOperationException("Input string in wrong format!");
+                throw new ArgumentException("Input string in wrong format!");
 
             return new string(str.Where(ch => ch.IsDigitNumber()).ToArray());
         }
@@ -135,9 +135,9 @@ namespace Utils.Types.String
             var indexOfLastStr = str.Length - 1;
 
             if (!str.Valid())
-                throw new InvalidOperationException("Input string in wrong format!");
+                throw new ArgumentException("Input string in wrong format!");
             if (stopIndexFromEnd > indexOfLastStr || stopIndexFromEnd < 0)
-                throw new InvalidOperationException("StopIndex outside bounds of string!");
+                throw new ArgumentException("StopIndex outside bounds of string!");
 
             for (var i = indexOfLastStr; i > indexOfLastStr - stopIndexFromEnd; i--)
             {
@@ -154,9 +154,9 @@ namespace Utils.Types.String
             var indexOfLastStr = str.Length - 1;
 
             if (!str.Valid())
-                throw new InvalidOperationException("Input string in wrong format!");
+                throw new ArgumentException("Input string in wrong format!");
             if (stopIndex > indexOfLastStr || stopIndex < 0)
-                throw new InvalidOperationException("StopIndex outside bounds of string!");
+                throw new ArgumentException("StopIndex outside bounds of string!");
 
             var indexList = new List<int>();
             for (var i = indexOfLastStr; i > indexOfLastStr - stopIndex; i--)
@@ -177,7 +177,7 @@ namespace Utils.Types.String
         public static bool ContainsSpecialDigitChar(this string str)
         {
             if (!str.Valid())
-                throw new InvalidOperationException("Input string in wrong format!");
+                throw new ArgumentException("Input string in wrong format!");
 
             var specialChars = new[] {"-", ".", "e", "E"};
 
@@ -187,9 +187,9 @@ namespace Utils.Types.String
         public static bool ContainsAny(this string str, params string[] strings)
         {
             if (!str.Valid())
-                throw new InvalidOperationException("Input string in wrong format!");
+                throw new ArgumentException("Input string in wrong format!");
             if (!strings.Any())
-                throw new InvalidOperationException("Input params empty!");
+                throw new ArgumentException("Input params empty!");
 
             return strings.Any(str.Contains); 
         }
@@ -197,9 +197,9 @@ namespace Utils.Types.String
         public static bool ContainsAnySequenceOf(this string str, List<char> charArray)
         {
             if (!str.Valid())
-                throw new InvalidOperationException("Input string in wrong format!");
+                throw new ArgumentException("Input string in wrong format!");
             if (!charArray.Any())
-                throw new InvalidOperationException("Input params empty!");
+                throw new ArgumentException("Input params empty!");
 
             var matchingChars = charArray.Where(char1 =>
                 str.ToCharArray().Any(char2 => char2.Equals(char1)));
@@ -220,9 +220,9 @@ namespace Utils.Types.String
         public static string ReplaceAny(this string str, string[] toReplace, string replacement = "")
         {
             if (!str.Valid())
-                throw new InvalidOperationException("Input string in wrong format!");
+                throw new ArgumentException("Input string in wrong format!");
             if (!toReplace.Any())
-                throw new InvalidOperationException("Input params empty!");
+                throw new ArgumentException("Input params empty!");
 
             foreach (var strToReplace in toReplace)
                 if(str.Contains(strToReplace))
@@ -234,7 +234,7 @@ namespace Utils.Types.String
         public static string ReplaceAt(this string str, int index, int length, string replacement = "")
         {
             if (!str.Valid())
-                throw new InvalidOperationException("Input string in wrong format!");
+                throw new ArgumentException("Input string in wrong format!");
 
             return str.Remove(index, Math.Min(length, str.Length - index))
                 .Insert(index, replacement);
@@ -243,7 +243,7 @@ namespace Utils.Types.String
         public static string ReplaceForbiddenFilenameChars(this string str, string replacement = "")
         {
             if (!str.Valid())
-                throw new InvalidOperationException("Input string in wrong format!");
+                throw new ArgumentException("Input string in wrong format!");
 
             var forbiddenChars = new[] { "<", ">", ":", "\"", "/", "\\", "|", "?", "*"};
 
@@ -253,7 +253,7 @@ namespace Utils.Types.String
         public static string StringBetweenStrings(this string str, string start, string end)
         {
             if (!str.Valid())
-                throw new InvalidOperationException("Input string in wrong format!");
+                throw new ArgumentException("Input string in wrong format!");
 
             var indexOfStart = str.IndexOf(start, StringComparison.Ordinal) + start.Length;
             var indexOfEnd = str.IndexOf(end, indexOfStart, StringComparison.Ordinal);
@@ -264,7 +264,7 @@ namespace Utils.Types.String
         public static string RemoveLineBreaks(this string str)
         {
             if (!str.Valid())
-                throw new InvalidOperationException("Input string in wrong format!");
+                throw new ArgumentException("Input string in wrong format!");
 
             return str.Replace("\r", string.Empty)
                 .Replace("\n", string.Empty);
@@ -273,7 +273,7 @@ namespace Utils.Types.String
         public static string ReplaceLineBreaks(this string str, string replacement)
         {
             if (!str.Valid())
-                throw new InvalidOperationException("Input string in wrong format!");
+                throw new ArgumentException("Input string in wrong format!");
 
             return str.Replace("\r\n", replacement)
                 .Replace("\r", replacement)
@@ -283,7 +283,7 @@ namespace Utils.Types.String
         public static string SurroundWithDoubleQuotes(this string str)
         {
             if (!str.Valid())
-                throw new InvalidOperationException("Input string in wrong format!");
+                throw new ArgumentException("Input string in wrong format!");
 
             return SurroundWith(str, "\"");
         }
@@ -291,7 +291,7 @@ namespace Utils.Types.String
         public static string SurroundWith(this string str, string endMark)
         {
             if (!str.Valid())
-                throw new InvalidOperationException("Input string in wrong format!");
+                throw new ArgumentException("Input string in wrong format!");
 
             return endMark + str + endMark;
         }
@@ -299,7 +299,7 @@ namespace Utils.Types.String
         public static string FirstCharToUpper(this string str)
         {
             if (!str.Valid())
-                throw new InvalidOperationException("Input string in wrong format!");
+                throw new ArgumentException("Input string in wrong format!");
 
             if (str.Length == 1)
                 return char.ToUpper(str[0]).ToString();
@@ -310,7 +310,7 @@ namespace Utils.Types.String
         public static string[] SplitAt(this string str, params int[] index)
         {
             if (!str.Valid())
-                throw new InvalidOperationException("Input string in wrong format!");
+                throw new ArgumentException("Input string in wrong format!");
 
             index = index.Distinct().OrderBy(x => x).ToArray();
             var output = new string[index.Length + 1];
@@ -326,7 +326,7 @@ namespace Utils.Types.String
         public static string[] SplitIfNotPrecededByChar(this string str, string splitPattern, char precedingChar)
         {
             if (!str.Valid())
-                throw new InvalidOperationException("Input string in wrong format!");
+                throw new ArgumentException("Input string in wrong format!");
 
             var result = Array.Empty<string>();
 
@@ -344,7 +344,7 @@ namespace Utils.Types.String
         public static IEnumerable<int> AllIndicesOf(this string str, string pattern)
         {
             if (!str.Valid())
-                throw new InvalidOperationException("Input string in wrong format!");
+                throw new ArgumentException("Input string in wrong format!");
 
             //Knuth–Morris–Pratt algorithm
             var M = pattern.Length;
@@ -412,7 +412,7 @@ namespace Utils.Types.String
         public static byte[] ToByteArray(this string str, Encoding encoding)
         {
             if (!str.Valid())
-                throw new InvalidOperationException("Input string in wrong format!");
+                throw new ArgumentException("Input string in wrong format!");
 
             return encoding.GetBytes(str);
         }
@@ -420,7 +420,7 @@ namespace Utils.Types.String
         public static byte[] EncodeToBytes(this string str)
         {
             if (!str.Valid())
-                throw new InvalidOperationException("Input string in wrong format!");
+                throw new ArgumentException("Input string in wrong format!");
 
             var bytes = new byte[str.Length * sizeof(char)];
 
@@ -439,7 +439,7 @@ namespace Utils.Types.String
         public static byte[] DecodeToBytes(this string str)
         {
             if (!str.Valid())
-                throw new InvalidOperationException("Input string in wrong format!");
+                throw new ArgumentException("Input string in wrong format!");
 
             var even = str[0] == '0';
             var bytes = new byte[(str.Length - 1) * sizeof(char) + (even ? 0 : -1)];
@@ -461,7 +461,7 @@ namespace Utils.Types.String
             where T : System.Enum
         {
             if (!str.Valid())
-                throw new InvalidOperationException("Input string in wrong format!");
+                throw new ArgumentException("Input string in wrong format!");
 
             foreach (var field in typeof(T).GetFields())
             {
@@ -485,16 +485,16 @@ namespace Utils.Types.String
         public static T To<T>(this string str)  //TODO: unsigned types, more checks
         {
             if (!str.Valid())
-                throw new InvalidOperationException("Input string in wrong format!");
+                throw new ArgumentException("Input string in wrong format!");
 
             switch (typeof(T))
             {
                 case { } sbyteType when sbyteType == typeof(sbyte): // int8
                     {
                         if (!str.IsDigitsOnly() && !str.Contains("-"))
-                            throw new InvalidOperationException("Input string in wrong format, non-digit char other then '-' present.");
+                            throw new ArgumentException("Input string in wrong format, non-digit char other then '-' present.");
                         if (str.ToCharArray().Length > 3)
-                            throw new InvalidOperationException("Input string in wrong format, too many digits maximum for int8 is 3.");
+                            throw new ArgumentException("Input string in wrong format, too many digits maximum for int8 is 3.");
 
                         sbyte value;
                         try
@@ -626,6 +626,16 @@ namespace Utils.Types.String
                 default:
                     throw new InvalidOperationException("Input type is not supported!");
             }
+        }
+
+        public static T ToEnum<T>(this string str, bool ignoreCase = true) 
+            where T : struct
+        {
+            if (!str.Valid())
+                throw new ArgumentException("Input string in wrong format!");
+
+            return System.Enum.TryParse<T>(str, ignoreCase, out var result) 
+                ? result : default;
         }
     }
 }
